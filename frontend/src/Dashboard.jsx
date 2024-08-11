@@ -1,55 +1,57 @@
-
-
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const Dashboard = ({ flashcards, updateFlashcards, navigateTo }) => {
-  const [newQuestion, setNewQuestion] = useState('');
-  const [newAnswer, setNewAnswer] = useState('');
+  const [newQuestion, setNewQuestion] = useState("");
+  const [newAnswer, setNewAnswer] = useState("");
   const [editingId, setEditingId] = useState(null);
-
 
   const addFlashcard = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://tuf-intern-5w9b.onrender.com', {
-        question: newQuestion,
-        answer: newAnswer
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/flashcards",
+        {
+          question: newQuestion,
+          answer: newAnswer,
+        }
+      );
       const updatedFlashcards = [...flashcards, response.data];
       updateFlashcards(updatedFlashcards);
-      setNewQuestion('');
-      setNewAnswer('');
+      setNewQuestion("");
+      setNewAnswer("");
     } catch (error) {
-      console.error('Error adding flashcard:', error);
+      console.error("Error adding flashcard:", error);
     }
   };
 
   const updateFlashcard = async (id) => {
     try {
-      await axios.put(`https://tuf-intern-5w9b.onrender.com/${id}`, {
+      await axios.put(`http://localhost:5000/api/flashcards/${id}`, {
         question: newQuestion,
-        answer: newAnswer
+        answer: newAnswer,
       });
-      const updatedFlashcards = flashcards.map(card => 
-        card.id === id ? { ...card, question: newQuestion, answer: newAnswer } : card
+      const updatedFlashcards = flashcards.map((card) =>
+        card.id === id
+          ? { ...card, question: newQuestion, answer: newAnswer }
+          : card
       );
       updateFlashcards(updatedFlashcards);
       setEditingId(null);
-      setNewQuestion('');
-      setNewAnswer('');
+      setNewQuestion("");
+      setNewAnswer("");
     } catch (error) {
-      console.error('Error updating flashcard:', error);
+      console.error("Error updating flashcard:", error);
     }
   };
 
   const deleteFlashcard = async (id) => {
     try {
-      await axios.delete(`https://tuf-intern-5w9b.onrender.com/${id}`);
-      const updatedFlashcards = flashcards.filter(card => card.id !== id);
+      await axios.delete(`http://localhost:5000/api/flashcards/${id}`);
+      const updatedFlashcards = flashcards.filter((card) => card.id !== id);
       updateFlashcards(updatedFlashcards);
     } catch (error) {
-      console.error('Error deleting flashcard:', error);
+      console.error("Error deleting flashcard:", error);
     }
   };
 
@@ -62,8 +64,20 @@ const Dashboard = ({ flashcards, updateFlashcards, navigateTo }) => {
   return (
     <div className="dashboard">
       <h2>Admin Dashboard</h2>
-      <h3>I can make authentication admin login using JWT and make this dashboard only visible to admin, but was less on time so thats why </h3>
-      <form onSubmit={editingId !== null ? (e) => { e.preventDefault(); updateFlashcard(editingId); } : addFlashcard}>
+      <h3>
+        I can make authentication admin login using JWT and make this dashboard
+        only visible to admin, but was less on time so thats why{" "}
+      </h3>
+      <form
+        onSubmit={
+          editingId !== null
+            ? (e) => {
+                e.preventDefault();
+                updateFlashcard(editingId);
+              }
+            : addFlashcard
+        }
+      >
         <input
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
@@ -77,12 +91,14 @@ const Dashboard = ({ flashcards, updateFlashcards, navigateTo }) => {
           required
         />
         <button type="submit">
-          {editingId !== null ? 'Update Flashcard' : 'Add Flashcard'}
+          {editingId !== null ? "Update Flashcard" : "Add Flashcard"}
         </button>
-        {editingId !== null && <button onClick={() => setEditingId(null)}>Cancel</button>}
+        {editingId !== null && (
+          <button onClick={() => setEditingId(null)}>Cancel</button>
+        )}
       </form>
       <ul>
-        {flashcards.map(card => (
+        {flashcards.map((card) => (
           <li key={card.id}>
             {card.question}: {card.answer}
             <button onClick={() => startEditing(card)}>Edit</button>

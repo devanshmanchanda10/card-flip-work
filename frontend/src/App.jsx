@@ -12,10 +12,10 @@ const App = () => {
   useEffect(() => {
     fetchFlashcards();
   }, []);
-
+  //http://localhost:5000/api/flashcards
   const fetchFlashcards = async () => {
     try {
-      const response = await axios.get("https://tuf-intern-5w9b.onrender.com");
+      const response = await axios.get("http://localhost:5000/api/flashcards");
       setFlashcards(response.data);
     } catch (error) {
       console.error("Error fetching flashcards:", error);
