@@ -12,7 +12,7 @@ const Dashboard = ({ flashcards, updateFlashcards, navigateTo }) => {
   const addFlashcard = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/flashcards', {
+      const response = await axios.post('https://tuf-intern-5w9b.onrender.com', {
         question: newQuestion,
         answer: newAnswer
       });
@@ -27,7 +27,7 @@ const Dashboard = ({ flashcards, updateFlashcards, navigateTo }) => {
 
   const updateFlashcard = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/flashcards/${id}`, {
+      await axios.put(`https://tuf-intern-5w9b.onrender.com/${id}`, {
         question: newQuestion,
         answer: newAnswer
       });
@@ -45,7 +45,7 @@ const Dashboard = ({ flashcards, updateFlashcards, navigateTo }) => {
 
   const deleteFlashcard = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/flashcards/${id}`);
+      await axios.delete(`https://tuf-intern-5w9b.onrender.com/${id}`);
       const updatedFlashcards = flashcards.filter(card => card.id !== id);
       updateFlashcards(updatedFlashcards);
     } catch (error) {
