@@ -17,7 +17,7 @@ const App = () => {
 
   const fetchFlashcards = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/flashcards');
+      const response = await axios.get('https://tuf-intern-5w9b.onrender.com');
       setFlashcards(response.data);
     } catch (error) {
       console.error('Error fetching flashcards:', error);
@@ -53,7 +53,7 @@ const App = () => {
           <div className="flashcard-view">
             <div className="card-navigation">
               <button onClick={prevSlide} className="nav-button prev">
-                &#8592; Prev
+                  Prev
               </button>
               {flashcards.length > 0 && (
                 <ReactQuestionCard
@@ -62,7 +62,7 @@ const App = () => {
                 />
               )}
               <button onClick={nextSlide} className="nav-button next">
-                Next &#8594;
+                Next
               </button>
             </div>
             <div className="progress-dots">
