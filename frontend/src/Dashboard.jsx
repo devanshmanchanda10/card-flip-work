@@ -65,8 +65,8 @@ const Dashboard = ({ flashcards, updateFlashcards, navigateTo }) => {
     <div className="dashboard">
       <h2>Admin Dashboard</h2>
       <h3>
-        I can make authentication admin login using JWT and make this dashboard
-        only visible to admin, but was less on time so thats why{" "}
+        I can make authorisation - admin login using JWT and make this dashboard
+        only visible to admin, but was low on time so thats why{" "}
       </h3>
       <form
         onSubmit={
